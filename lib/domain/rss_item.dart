@@ -16,10 +16,14 @@ class RssItem {
       title: findElementOrNull(element, 'title')?.innerText,
       description: findElementOrNull(element, 'description')?.innerText,
       link: findElementOrNull(element, 'link')?.innerText,
-      categories: element.findElements('category').map((element) => RssCategory.parse(element)).toList(),
+      categories: element
+          .findElements('category')
+          .map((element) => RssCategory.parse(element))
+          .toList(),
       guid: findElementOrNull(element, 'guid')?.innerText,
       pubDate: findElementOrNull(element, 'pubDate')?.innerText,
       author: findElementOrNull(element, 'author')?.innerText,
+      image: findElementOrNull(element, 'image')?.innerText,
       comments: findElementOrNull(element, 'comments')?.innerText,
       source: RssSource.parse(findElementOrNull(element, 'source')),
       content: RssContent.parse(findElementOrNull(element, 'content:encoded')),
@@ -39,6 +43,7 @@ class RssItem {
     this.guid,
     this.pubDate,
     this.author,
+    this.image,
     this.comments,
     this.source,
     this.content,
@@ -57,6 +62,7 @@ class RssItem {
   final String? guid;
   final String? pubDate;
   final String? author;
+  final String? image;
   final String? comments;
   final RssSource? source;
   final RssContent? content;
@@ -74,6 +80,7 @@ class RssItem {
     String? guid,
     String? pubDate,
     String? author,
+    String? image,
     String? comments,
     RssSource? source,
     RssContent? content,
@@ -91,6 +98,7 @@ class RssItem {
       guid: guid ?? this.guid,
       pubDate: pubDate ?? this.pubDate,
       author: author ?? this.author,
+      image: image ?? this.image,
       comments: comments ?? this.comments,
       source: source ?? this.source,
       content: content ?? this.content,
@@ -126,6 +134,10 @@ class RssItem {
 
       if (author != null) {
         builder.element("author", nest: author);
+      }
+
+      if (image != null) {
+        builder.element("image", nest: image);
       }
     });
   }
